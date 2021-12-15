@@ -109,3 +109,8 @@ tt5 %>%
   theme_bw() +
   labs(x = "Number 1", y = " Number 2", color = "Text categories")
 
+## !!! Exercise
+## Make line and point graphs with your own table
+## Add a theme and custom labels
+
+
