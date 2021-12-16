@@ -78,36 +78,30 @@ tt5 %>%
   geom_line()
 
 ## Combined geometries
-tt5 %>%
+gr1 <- tt5 %>%
   ggplot(aes(x = num2, y = num1, color = txt2)) +
   geom_point() +
   geom_line()
-  
+gr1
+
 ## Add filter
-tt5 %>%
+gr2 <- tt5 %>%
   filter(num2 <= 10) %>%
   ggplot(aes(x = num2, y = num1, color = txt2)) +
   geom_point() + 
   geom_line()
+gr2
 
 ## Add scale and theme  
-tt5 %>%
-  filter(num2 <= 10) %>%
-  ggplot(aes(x = num2, y = num1, color = txt2)) +
-  geom_point() + 
-  geom_line() +
+gr3 <- gr2 +
   scale_color_viridis_d() +
   theme_bw()
+gr3
 
 ## Add labels  
-tt5 %>%
-  filter(num2 <= 10) %>%
-  ggplot(aes(x = num2, y = num1, color = txt2)) +
-  geom_point() + 
-  geom_line() +
-  scale_color_viridis_d() +
-  theme_bw() +
+gr4 <- gr3 +
   labs(x = "Number 1", y = " Number 2", color = "Text categories")
+gr4
 
 ## !!! Exercise
 ## Make line and point graphs with your own table

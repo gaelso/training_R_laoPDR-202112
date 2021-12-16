@@ -1,7 +1,7 @@
 ## Custom R gitignore
 preparation/
-
-
+data/
+results/
 
 ## Default R gitignore
 # History files
