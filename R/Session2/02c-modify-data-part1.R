@@ -87,7 +87,7 @@ tab10
 
 ## Combine functions with pipes ---------------------------------------------
 
-tab11 <- tab %>%
+tab11 <- tibble(a = 1:5, b = 11:15) %>%
   mutate(
     c = a + b,
     d = letters[1:5],

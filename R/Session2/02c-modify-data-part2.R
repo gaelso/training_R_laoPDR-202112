@@ -8,6 +8,15 @@ library(tidyverse)
 
 ## Initial table with 50 rows and 5 columns resembling tree data ------------
 
+## To create trees data from scratch we will use statistical distributions. 
+## rlnorm() is used to simulate tree DBH following a log-normal distribution.
+## rnorm() is used to simulate residuals following a normal distribution.
+## set.seed() fixes the random samples to make sure everybody has the same values.
+## Examples:
+rlnorm(n = 50, meanlog = log(20), sdlog = log(2))
+rnorm(n = 50, mean = 0, sd = 0.243)
+
+## Make trees
 set.seed(33)
 tree <- tibble(
   plot_id = sort(rep(LETTERS[1:5], 10)),
@@ -68,8 +77,8 @@ ggplot(tree, aes(x = tree_dbh, y = tree_height, fill = plot_id)) +
 
   
 ## !!! Exercise
-## 1. Create tree4 based on tree with filtering all trees with Height bigger than 35 m. 
-## 2. make a graphs with tree, tree3 and tree4, tree3 and tree 4 should show as large red circles
+## 1. Create 'tree4' based on tree with filtering all trees with Height bigger than 35 m. 
+## 2. make a graphs with 'tree', 'tree3' and 'tree4'. 'tree3' and 'tree4' should show as large red circles
 
 
 
