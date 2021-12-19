@@ -57,13 +57,54 @@ is.na(vec)
 table(tree$plot_id)
 
 tree2 <- tree %>%
-  mutate(forest_type1 = if_else(plot_id %in% c("A", "B", "C"), "Evergreen", "Deciduous"))
+  mutate(forest_type = if_else(plot_id %in% c("A", "B", "C"), "Evergreen", "Deciduous"))
 tree2
 
-table(tree2$plot_id, tree2$forest_type1)
+table(tree2$plot_id, tree2$forest_type)
 
 ## !!! Exercise
-## Create 'tree3' based on 'tree2' and use mutate() and if_else() to create a new column.
+## Create 'mytree2' based on 'tree2' and use mutate() and if_else() to create a new column.
 ## The new column name is 'crew' and it contains 'crew01' for plots A and B and 'crew02'
 ## for plots C, D and E
+
+
+
+## case_when() --------------------------------------------------------------
+
+tree3 <- tree2 %>%
+  mutate(
+    dbh_class = case_when(
+      tree_dbh < 20   ~ "0-19.9",
+      tree_dbh < 40   ~ "20-39.9",
+      tree_dbh < 60   ~ "40-59.9",
+      tree_dbh < 80   ~ "60-79.9",
+      tree_dbh < 100  ~ "80-99.9",
+      tree_dbh >= 100 ~ "> 100",
+      TRUE ~ NA_character_
+    )
+  )
+
+table(tree3$dbh_class)
+
+
+ggplot(data = tree3, aes(x = tree_dbh, y = tree_height, fill = dbh_class)) +
+  geom_point(shape = 21, size = 2) +
+  scale_fill_viridis_d() +
+  theme_bw() +
+  theme(legend.position = "top") +
+  labs(x = "DBH (cm)", y = "H (m)", fill = "Plot ID")
+
+
+## !!! Exercise 
+## 1. Create 'mytree3' based on 'tree3' and use mutate() and case_when() to add
+## a new column 'height_class' to assign the following classes based on tree_height
+## - 0-9.9, 10-19.9, 20-29.9, 30-39.9, 40-49.9. 
+## 2. Create a graph to show tree_height against tree_dbh with points of shape 21, 
+## and fill based on height_class
+
+
+
+
+
+
 
