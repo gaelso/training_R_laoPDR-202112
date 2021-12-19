@@ -58,7 +58,6 @@ table(tree$plot_id)
 
 tree2 <- tree %>%
   mutate(forest_type = if_else(plot_id %in% c("A", "B", "C"), "Evergreen", "Deciduous"))
-tree2
 
 table(tree2$plot_id, tree2$forest_type)
 
@@ -89,7 +88,7 @@ table(tree3$dbh_class)
 
 ggplot(data = tree3, aes(x = tree_dbh, y = tree_height, fill = dbh_class)) +
   geom_point(shape = 21, size = 2) +
-  scale_fill_viridis_d() +
+  scale_fill_viridis_d(direction = -1) +
   theme_bw() +
   theme(legend.position = "top") +
   labs(x = "DBH (cm)", y = "H (m)", fill = "Plot ID")
