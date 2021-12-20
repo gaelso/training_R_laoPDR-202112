@@ -100,7 +100,7 @@ gr3
 
 ## Add labels  
 gr4 <- gr3 +
-  labs(x = "Number 1", y = " Number 2", color = "Text categories")
+  labs(x = "Number 1", y = "Number 2", color = "Text categories")
 gr4
 
 ## !!! Exercise
