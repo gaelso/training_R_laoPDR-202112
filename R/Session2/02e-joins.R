@@ -58,6 +58,7 @@ tree4 <- tree_sub %>% left_join(plot, by = c("plot_ID" = "plot_id"))
 
 table(tree4$plot_ID, tree4$forest_type)
 
+
 ## >>> The best practice is tree3: ensure the common variable has the same name 
 ##     in both tables and manually name it. 
 
@@ -66,6 +67,7 @@ table(tree4$plot_ID, tree4$forest_type)
 ## 2. Create 'myplot' based on 'plot' and filter out data from plot "A"
 ## 3. Create 'mytree2' based on 'mytree' and join 'myplot' with left_join()
 ## 4. Use table() to show how many trees per plot and forest type are in 'mytree2'
+
 
 
 ## other joins --------------------------------------------------------------
@@ -120,5 +122,39 @@ tree8 %>% filter(plot_id == "D")
 ##    from 'myplot' and only matching records from 'mytree'.
 ## 3. Use table() to show the number of trees per plot and forest type in 'mytree3' and 'mytree4'.
 
+
+
+## More than one matching column --------------------------------------------
+
+## If several columns are shared between the 2 tables, they should be all called
+## Add plot_no to count the plots
+tree_sub2 <- tree %>% 
+  mutate(plot_no = sort(rep(1:5, 10))) %>%
+  filter(plot_id != "D") %>%
+  select(plot_id, plot_no, everything())
+tree_sub2
+
+plot_sub2 <- plot %>%
+  mutate(plot_no = 1:5) %>% 
+  filter(plot_id != "B") %>%
+  select(plot_id, plot_no, everything())
+plot_sub2
+
+## Automatic join will find 2 column matching columns
+tree9 <- tree_sub2 %>% left_join(plot_sub2)
+tree9
+
+## If manually selecting only 1 matching column the other column will have suffix
+tree10 <- tree_sub2 %>% left_join(plot_sub2, by = "plot_id")
+tree10
+
+## If you want to keep both plot_no columns, you can also manually edit the suffix
+tree11 <- tree_sub2 %>% 
+  left_join(plot_sub2, by = "plot_id", suffix = c("_TREE", "_PLOT"))
+tree11
+
+## Otherwise manually quote all matching column to avoid duplicated columns
+tree12 <- tree_sub2 %>% left_join(plot_sub2, by = c("plot_id", "plot_no"))
+tree12
 
 
