@@ -48,7 +48,7 @@ if (book_format %in% c("html", "latex")) {
 
 ```{r group-photo, out.width='75%', fig.asp=0.5, fig.align='center'}
 
-knitr::include_graphics(path = "images/cover.jpeg")
+knitr::include_graphics(path = "data/images/cover.jpeg")
 
 ```
 
@@ -139,78 +139,25 @@ TBD
 
 \newpage
 
-# Session 1: Data analysis and management plan (Day 1)
+# Session 1: Practice skills from last training
 
-The training started with a general introduction on the climate change context and the importance of National Forest Inventories for monitoring the impact of the forestry sector, including the importance of the LULUCF sector in anthropogenic greenhouse gases (GHG) emissions and removals, the COP decisions on REDD+, the IPCC guidelines for calculating GHG emissions and removals and the calculation method for Thailand first FREL/FRL.
+Given that a number of participants were attending for the first time and the last training was implemented eight months before, the second training started with a recap on R and Rstudio, data and object types in R. 
 
-The participants brainstormed on a data management and analysis plan, with a series of question to better understand the workflow, timing and list of variables of interests. The next NFI cycle is planned for 2022-2024, following 5 year cycles, with the same design: systematic sampling of 17.84m radius circular plots on a 10 km grid. 
-
-The design and data analysis is divided among three institutions: DNP is responsible for protected forests, RFD (Royal Forest Department) for reserved forests and DMCR (Department of Marine and Coastal Resources) for mangrove forests.  The current analysis workflow for DNP is (RFP/DMCR might be different):
-
-1. Design: unchanged.
-1. Data collection: data sheets and paper forms.
-1. Data processing: manual entry to MS ACCESS database.
-1. Data cleaning: Currently no SOP, plan to do it with R.
-1. Exploratory data analysis: MS Access, MS EXCEL, ITTO.
-1. Modelling: No modeling at the moment. R could be used.
-1. Data products: R scripts, Excel files, Maps.
-1. Communication: NFI report, NFI database (not published).
+A new presentation was provided to clarify what is the {tidyverse} collection of R packages. These packages are used to read tables, store them as tibbles, make visualizations and play with the data (modify, join, aggregate) to calculate forest carbon stock.
 
 
-And a non-exhaustive list of variables of interest in presented in the next table.
+```{r tidyverse-slide, out.width='75%', fig.asp=0.5, fig.align='center', fig.cap="Tidyverse main packages used for NFI data analysis."}
 
-
-```{r}
-
-tab <- rbind(
-  c("Area forest type"  , "Area of forest types"                , "table"      , "plot/subnational/national"),
-  c("Perc. forest type" , "Percentage cover of forest types"    , "table"      , "plot"                     ),
-  c("GBH"               , "Girth at breast height"              , "table"      , "plot"                     ),
-  c("Total height"      , "Tree total height"                   , "table"      , "plot"                     ),
-  c("Azimuth"           , "Azimuth of tree position"            , "table"      , "plot"                     ),
-  c("Distance"          , "Distance of tree position"           , "table"      , "plot"                     ),
-  c("Species code"      , "Tree species information"            , "table"      , "plot"                     ),
-  c("Timber Quality"    , "Tree species information"            , "table"      , "plot"                     ),
-  c("Crown class"       , "Tree Crown class"                    , "table"      , "plot"                     ),
-  c("Crown condition"   , "Tree Crown condition"                , "table"      , "plot"                     ),
-  c("Crown width"       , "Crown width in 4 cardinal directions", "table"      , "plot"                     ),
-  c("Crown height"      , "Height of crown starting point"      , "table"      , "plot"                     ),
-  c("Tree Habitat"      , "Habitat for lichen and orchids"      , "table"      , "plot"                     ),
-  c("DBH"               , "Diameter at breast height"           , "table"      , "plot/subnational/national"),
-  c("BA"                , "Basal area"                          , "table"      , "plot/subnational/national"),
-  c("AGB"               , "Aboveground biomass"                 , "table"      , "plot/subnational/national"),
-  c("BGB"               , "Belowground biomass"                 , "table"      , "plot/subnational/national"),
-  c("Carbon stock"      , "Carbon stock"                        , "table/graph", "plot/subnational/national"),
-  c("CO2"               , "CO2 content of trees"                , "table"      , "plot/subnational/national"),
-  c("IVI"               , "Importance value index"              , "table"      , "plot/subnational/national"),
-  c("Biodiversity"      , "Tree biodiversity"                   , "table"      , "plot/subnational/national"),
-  c("Tree density"      , "Tree density in rai/ha"              , "table/graph", "plot/subnational/national"),
-  c("WD"                , "Tree wod density"                    , "table"      , "plot"                     ),
-  c("Tree position"     , "Tree position maps"                  , "graph"      , "plot"                     ),
-  c("Tree crown shape"  , "Tree crown maps at plot level"       , "graph"      , "plot"                     ),
-  c("Plot location"     , "Plot location map"                   , "graph"      , "subnational/national"     ),
-  c("Deadwood"          , "Deadwood volume/biomass"             , "table"      , "plot/subnational/national"),
-  c("CWD"               , "Coarse Woody Debris"                 , "table"      , "plot"                     ),
-  c("Bamboo density"    , "Density of bamboo culms"             , "table/graph", "plot/subnational/national"),
-  c("Erect rattan"      , "Density of erect rattan"             , "table"      , "plot/subnational/national"),
-  c("Tree stump density", "Density of tree stumps"              , "table"      , "plot/subnational/national")
-)
-
-kab <- tibble(id = 1:nrow(tab), variable = tab[,1], details = tab[,2], format = tab[,3], level = tab[,4]) %>%
-  knitr::kable(
-    col.names = c("id", "Variable", "Details", "Format", "Level"),
-    caption   = "Variables of interest to calculate from NFI raw data."
-    ) 
-
-if (book_format == "latex") kab %>% kableExtra::kable_styling(latex_options = c("scale_down", "HOLD_position")) else kab
+knitr::include_graphics(path = "data/images/tidyverse-slide.png")
 
 ```
 
+The practice then focused on style differences between data frames (base R) and tibbles (tidyverse equivalent) 
 
 
 \newpage
 
-# Session 2: Overview of the FREL/FRL code update with MS Excel
+# Session 2: Core steps of the calculation chain
 
 A presentation covered the main differences between the original and modified FREL/FRL submission (time period between NFIs, carbon stock of non forest lands). Then participants downloaded a copy of the calculation spreadsheets that were shared with the FREL/FRL technical assessment team. The Excel file contained the steps to:
 
